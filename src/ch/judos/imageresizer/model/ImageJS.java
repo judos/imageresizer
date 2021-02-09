@@ -1,4 +1,4 @@
-package ch.judos.imageresizermodel;
+package ch.judos.imageresizer.model;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Image;

@@ -6,14 +6,14 @@ import java.io.File;
 
 import javax.imageio.ImageIO;
 
-import ch.judos.imageresizermodel.AspectRatio;
-import ch.judos.imageresizermodel.FileJS;
-import ch.judos.imageresizermodel.IFrameModel;
-import ch.judos.imageresizermodel.ImageJS;
-import ch.judos.imageresizermodel.Notification;
-import ch.judos.imageresizermodel.ProgressIterable;
-import ch.judos.imageresizermodel.SaveAction;
-import ch.judos.imageresizermodel.ProgressIterable.Progress;
+import ch.judos.imageresizer.model.AspectRatio;
+import ch.judos.imageresizer.model.FileJS;
+import ch.judos.imageresizer.model.IFrameModel;
+import ch.judos.imageresizer.model.ImageJS;
+import ch.judos.imageresizer.model.Notification;
+import ch.judos.imageresizer.model.ProgressIterable;
+import ch.judos.imageresizer.model.SaveAction;
+import ch.judos.imageresizer.model.ProgressIterable.Progress;
 
 public class ScaleThread extends Thread {
 

@@ -10,10 +10,9 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 import javax.swing.ButtonGroup;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -25,9 +24,11 @@ import javax.swing.JTextField;
 import ch.judos.imageresizer.controller.AspectRatioActionListener;
 import ch.judos.imageresizer.controller.SizeActionListener;
 import ch.judos.imageresizer.controller.TargetActionListener;
-import ch.judos.imageresizermodel.AspectRatio;
-import ch.judos.imageresizermodel.IFrameModel;
-import ch.judos.imageresizermodel.SaveAction;
+import ch.judos.imageresizer.helper.KeyPressedAdapter;
+import ch.judos.imageresizer.helper.KeyReleasedAdapter;
+import ch.judos.imageresizer.model.AspectRatio;
+import ch.judos.imageresizer.model.IFrameModel;
+import ch.judos.imageresizer.model.SaveAction;
 
 public class IFrame extends JFrame implements IFrameModel {
 	private static final long serialVersionUID = 3819774890772267562L;
@@ -48,6 +49,7 @@ public class IFrame extends JFrame implements IFrameModel {
 	private RecolorableLineBorder aspectBorder;
 	private JPanel aspectPanel;
 	private AspectRatio imgAspectRatio;
+	public JComboBox<String> sizeComboBox;
 
 	public IFrame(boolean visible) {
 		setTitle("ImageResizer, by judos 2021©");
@@ -58,12 +60,13 @@ public class IFrame extends JFrame implements IFrameModel {
 		this.saveAction = null;
 
 		initContent();
-		this.sizeBorder = initPanel("Choose size:", 0, 0);
+		this.sizeBorder = initPanel("Resize?", 0, 0);
 		this.sizePanel = this.content;
 		initSizeOfImages();
 
 		this.aspectBorder = initPanel("Aspect ratio:", 0, 1);
 		this.aspectPanel = this.content;
+		this.aspectPanel.setVisible(false);
 		initAspectRatio();
 
 		this.targetBorder = initPanel("Choose target:", 0, 2);
@@ -71,7 +74,7 @@ public class IFrame extends JFrame implements IFrameModel {
 		initTargetOfImages();
 
 		this.progressBorder = initPanel("Progress:", 0, 3);
-		this.progressBorder.setColor(Color.green);
+		this.progressBorder.setColor(Color.LIGHT_GRAY);
 		this.progressPanel = this.content;
 		initProgress();
 
@@ -87,14 +90,17 @@ public class IFrame extends JFrame implements IFrameModel {
 		JRadioButton b;
 		b = addButton(g, new JRadioButton("fit into (selected size is maximal size)"), 0, 0);
 		b.setActionCommand("fit_into");
+		b.setSelected(true);
 		b = addButton(g, new JRadioButton("fit onto (selected size is minimum size)"), 0, 1);
 		b.setActionCommand("fit_onto");
 		b = addButton(g, new JRadioButton("force size (image might be distorted)"), 0, 2);
 		b.setActionCommand("force");
+		setAspectRatio(AspectRatio.FIT_INTO);
 	}
 
 	private void initProgress() {
-		addP(this.progressPanel, new JLabel("Drag files here to convert them."), 0, 0);
+		addComponent(this.progressPanel, new JLabel("Drag files here to convert them."), 0,
+			0);
 	}
 
 	private void initTargetOfImages() {
@@ -114,45 +120,52 @@ public class IFrame extends JFrame implements IFrameModel {
 	}
 
 	private void initSizeOfImages() {
-		final ButtonGroup g = new ButtonGroup();
+		final ButtonGroup btnGroup = new ButtonGroup();
 		final ActionListener sizeAL = new SizeActionListener(this);
-		this.listener = new SizeActionListener(this);
-		addButton(g, new JRadioButton("320 x 240"), 0, 1);
-		addButton(g, new JRadioButton("640 x 480"), 0, 2);
-		addButton(g, new JRadioButton("800 x 600"), 0, 3);
+		this.listener = sizeAL;
+		addButton(btnGroup, new JRadioButton("No"), 0, 0);
 
-		addButton(g, new JRadioButton("1024 x 768"), 1, 1);
-		addButton(g, new JRadioButton("1280 x 1024"), 1, 2);
-		addButton(g, new JRadioButton("1600 x 1200"), 1, 3);
+		JPanel dropdownPanel = new JPanel();
+		dropdownPanel.setLayout(new GridBagLayout());
+		JRadioButton chooseBtn =
+			addButton(btnGroup, dropdownPanel, new JRadioButton("Choose"), 0, 0);
 
-		JPanel custom = new JPanel();
-		custom.setLayout(new GridBagLayout());
-		final JRadioButton c = addButton(g, custom, new JRadioButton("Custom:"), 0, 0);
-		this.customX = (JTextField) addP(custom, new JTextField(), 1, 0);
+		this.sizeComboBox = new JComboBox<String>();
+		sizeComboBox.addItem("1920 x 1080");
+		sizeComboBox.addItem("1280 x 720");
+		sizeComboBox.addItem("800 x 600");
+		sizeComboBox.addActionListener((action) -> {
+			btnGroup.setSelected(chooseBtn.getModel(), true);
+			sizeAL.actionPerformed(
+				new ActionEvent(sizeComboBox, 0, (String) sizeComboBox.getSelectedItem()));
+		});
+		addComponent(dropdownPanel, sizeComboBox, 1, 0);
+		addComponent(this.content, dropdownPanel, 0, 1);
+
+		JPanel customPanel = new JPanel();
+		customPanel.setLayout(new GridBagLayout());
+		final JRadioButton c =
+			addButton(btnGroup, customPanel, new JRadioButton("Custom:"), 0, 0);
+		this.customX = (JTextField) addComponent(customPanel, new JTextField(), 1, 0);
 		this.customX.setPreferredSize(getTextFieldSize(5));
-		this.customX.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				sizeAL.actionPerformed(new ActionEvent(customX, 0, "Custom:"));
-				g.setSelected(c.getModel(), true);
-			}
+		this.customX.addKeyListener((KeyPressedAdapter) (e) -> {
+			sizeAL.actionPerformed(new ActionEvent(customX, 0, "Custom:"));
+			btnGroup.setSelected(c.getModel(), true);
 		});
-		addP(custom, new JLabel("x"), 2, 0);
-		this.customY = (JTextField) addP(custom, new JTextField(), 3, 0);
+		addComponent(customPanel, new JLabel("x"), 2, 0);
+		this.customY = (JTextField) addComponent(customPanel, new JTextField(), 3, 0);
 		this.customY.setPreferredSize(getTextFieldSize(5));
-		this.customY.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				sizeAL.actionPerformed(new ActionEvent(customY, 0, "Custom:"));
-				g.setSelected(c.getModel(), true);
-			}
+		this.customY.addKeyListener((KeyReleasedAdapter) (e) -> {
+			sizeAL.actionPerformed(new ActionEvent(customY, 0, "Custom:"));
+			btnGroup.setSelected(c.getModel(), true);
 		});
 
-		addP(custom, 0, 4, 2, 1);
+		addComponent(this.content, customPanel, 0, 2);
 	}
 
-	private JRadioButton addButton(ButtonGroup g, JPanel container, JRadioButton jRadioButton, int x, int y) {
-		addP(container, jRadioButton, x, y);
+	private JRadioButton addButton(ButtonGroup g, JPanel container,
+		JRadioButton jRadioButton, int x, int y) {
+		addComponent(container, jRadioButton, x, y);
 		g.add(jRadioButton);
 		if (this.listener != null)
 			jRadioButton.addActionListener(this.listener);
@@ -164,18 +177,8 @@ public class IFrame extends JFrame implements IFrameModel {
 		return jRadioButton;
 	}
 
-	@SuppressWarnings("unused")
-	private Component addP(Component comp, int x, int y) {
-		addP(comp, x, y, 1, 1);
-		return comp;
-	}
-
-	private Component addP(Component comp, int x, int y, int width, int height) {
-		return addP(this.content, comp, x, y, width, height);
-	}
-
-	private Component addP(JPanel container, Component comp, int x, int y) {
-		return addP(container, comp, x, y, 1, 1);
+	private Component addComponent(JPanel container, Component comp, int x, int y) {
+		return addComponent(container, comp, x, y, 1, 1);
 	}
 
 	private Dimension getTextFieldSize(int characters) {
@@ -186,7 +189,8 @@ public class IFrame extends JFrame implements IFrameModel {
 		return new Dimension(w * characters, h);
 	}
 
-	private Component addP(JPanel container, Component comp, int x, int y, int width, int height) {
+	private Component addComponent(JPanel container, Component comp, int x, int y,
+		int width, int height) {
 		comp.setFont(getFont());
 		c.gridx = x;
 		c.gridy = y;
@@ -202,6 +206,7 @@ public class IFrame extends JFrame implements IFrameModel {
 		c.insets = new Insets(2, 5, 2, 5);
 		c.gridy = 0;
 		c.weightx = 1;
+		c.weighty = 1;
 		c.anchor = GridBagConstraints.WEST;
 		setLayout(new GridBagLayout());
 	}
@@ -237,11 +242,13 @@ public class IFrame extends JFrame implements IFrameModel {
 		this.sizePanel.repaint();
 	}
 
-	public void set(Dimension dimension) {
+	public void setResizeDimension(Dimension dimension) {
 		this.imgSize = dimension;
 		this.imgSizeValid = true;
 		this.sizeBorder.setColor(Color.green);
 		this.sizePanel.repaint();
+		this.aspectPanel.setVisible(this.imgSize != null);
+		this.pack();
 	}
 
 	public void setTargetAction(SaveAction s) {
@@ -277,20 +284,26 @@ public class IFrame extends JFrame implements IFrameModel {
 		p.setForeground(new Color(150, 250, 150));
 		p.setValue((int) (progress * 100));
 		c.fill = GridBagConstraints.HORIZONTAL;
-		addP(this.progressPanel, p, 0, 0);
+		addComponent(this.progressPanel, p, 0, 0);
 		int per = (int) (progress * 100);
-		addP(this.progressPanel, new JLabel(per + " % finished"), 0, 1);
+		addComponent(this.progressPanel, new JLabel(per + " % finished"), 0, 1);
 		this.progressPanel.validate();
 		pack();
 	}
 
 	public boolean allInputValid() {
-		if (!this.imgSizeValid)
+		if (!this.imgSizeValid) {
+			System.out.println("Size invalid");
 			return false;
-		if (this.imgAspectRatio == null)
+		}
+		if (this.imgAspectRatio == null) {
+			System.out.println("missing aspect ratio");
 			return false;
-		if (this.saveAction == null)
+		}
+		if (this.saveAction == null) {
+			System.out.println("Missing save action");
 			return false;
+		}
 		return true;
 	}
 

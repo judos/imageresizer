@@ -17,24 +17,37 @@ public class SizeActionListener implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
-		String button = arg0.getActionCommand();
+		String action = arg0.getActionCommand();
 		Pattern p = Pattern.compile("(\\d+) x (\\d+)");
-		Matcher m = p.matcher(button);
+		Matcher m = p.matcher(action);
 		if (m.matches()) {
-			this.frame
-				.set(new Dimension(Integer.valueOf(m.group(1)), Integer.valueOf(m.group(2))));
+			this.frame.setResizeDimension(
+				new Dimension(Integer.valueOf(m.group(1)), Integer.valueOf(m.group(2))));
 		}
-		else if (button.equals("Custom:")) {
+		else if (action.equals("Custom:")) {
 			try {
-				this.frame
-					.set(new Dimension(this.frame.getCustomSizeX(), this.frame.getCustomSizeY()));
+				this.frame.setResizeDimension(
+					new Dimension(this.frame.getCustomSizeX(), this.frame.getCustomSizeY()));
 				if (this.frame.getCustomSizeX() == 0 || this.frame.getCustomSizeY() == 0)
 					this.frame.sizeUnset();
 			}
 			catch (Exception e) {
 				this.frame.sizeUnset();
 			}
-
+		}
+		else if (action.equals("No")) {
+			this.frame.setResizeDimension(null);
+		}
+		else if (action.equals("Choose")) {
+			String dim = (String) this.frame.sizeComboBox.getSelectedItem();
+			m = p.matcher(dim);
+			if (m.matches()) {
+				this.frame.setResizeDimension(
+					new Dimension(Integer.valueOf(m.group(1)), Integer.valueOf(m.group(2))));
+			}
+		}
+		else {
+			this.frame.sizeUnset();
 		}
 	}
 }

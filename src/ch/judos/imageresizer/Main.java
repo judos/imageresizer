@@ -3,10 +3,10 @@ package ch.judos.imageresizer;
 import java.io.File;
 
 import ch.judos.imageresizer.controller.ScaleThread;
+import ch.judos.imageresizer.model.FileDrop;
+import ch.judos.imageresizer.model.FileDrop.Listener;
+import ch.judos.imageresizer.model.IFrameModel;
 import ch.judos.imageresizer.view.IFrame;
-import ch.judos.imageresizermodel.FileDrop;
-import ch.judos.imageresizermodel.FileDrop.Listener;
-import ch.judos.imageresizermodel.IFrameModel;
 
 /**
  * TODO: show filename while progressing<br>
@@ -28,6 +28,7 @@ public class Main implements Listener {
 	}
 
 	public void filesDropped(File[] files) {
+		System.out.println("start conversion");
 		if (!this.frame.allInputValid())
 			return;
 
