@@ -1,4 +1,4 @@
-package view;
+package ch.judos.imageresizer.view;
 
 import java.awt.Color;
 

@@ -1,4 +1,4 @@
-package model;
+package ch.judos.imageresizermodel;
 
 public enum AspectRatio {
 	FIT_INTO, FIT_ONTO, FORCE;

@@ -1,4 +1,4 @@
-package model;
+package ch.judos.imageresizermodel;
 
 import javax.swing.JOptionPane;
 

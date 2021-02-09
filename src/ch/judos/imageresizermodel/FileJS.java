@@ -1,4 +1,4 @@
-package model;
+package ch.judos.imageresizermodel;
 
 import java.awt.Component;
 import java.io.BufferedReader;

@@ -1,4 +1,4 @@
-package model;
+package ch.judos.imageresizermodel;
 
 import java.awt.datatransfer.DataFlavor;
 import java.io.BufferedReader;

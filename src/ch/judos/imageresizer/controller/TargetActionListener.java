@@ -1,10 +1,10 @@
-package controller;
+package ch.judos.imageresizer.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import model.SaveAction;
-import view.IFrame;
+import ch.judos.imageresizer.view.IFrame;
+import ch.judos.imageresizermodel.SaveAction;
 
 public class TargetActionListener implements ActionListener {
 

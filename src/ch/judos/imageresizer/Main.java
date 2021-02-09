@@ -1,10 +1,11 @@
+package ch.judos.imageresizer;
 import java.io.File;
 
-import model.FileDrop;
-import model.FileDrop.Listener;
-import model.IFrameModel;
-import view.IFrame;
-import controller.ScaleThread;
+import ch.judos.imageresizer.controller.ScaleThread;
+import ch.judos.imageresizer.view.IFrame;
+import ch.judos.imageresizermodel.FileDrop;
+import ch.judos.imageresizermodel.IFrameModel;
+import ch.judos.imageresizermodel.FileDrop.Listener;
 
 
 /*

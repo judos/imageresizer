@@ -1,9 +1,9 @@
-package model;
+package ch.judos.imageresizermodel;
 
 import java.util.Iterator;
 import java.util.List;
 
-import model.ProgressIterable.Progress;
+import ch.judos.imageresizermodel.ProgressIterable.Progress;
 
 public class ProgressIterable<T> implements Iterable<Progress<T>> {
 

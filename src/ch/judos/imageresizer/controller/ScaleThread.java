@@ -1,4 +1,4 @@
-package controller;
+package ch.judos.imageresizer.controller;
 
 import java.awt.Dimension;
 import java.awt.Image;
@@ -6,14 +6,14 @@ import java.io.File;
 
 import javax.imageio.ImageIO;
 
-import model.AspectRatio;
-import model.FileJS;
-import model.IFrameModel;
-import model.ImageJS;
-import model.Notification;
-import model.ProgressIterable;
-import model.ProgressIterable.Progress;
-import model.SaveAction;
+import ch.judos.imageresizermodel.AspectRatio;
+import ch.judos.imageresizermodel.FileJS;
+import ch.judos.imageresizermodel.IFrameModel;
+import ch.judos.imageresizermodel.ImageJS;
+import ch.judos.imageresizermodel.Notification;
+import ch.judos.imageresizermodel.ProgressIterable;
+import ch.judos.imageresizermodel.SaveAction;
+import ch.judos.imageresizermodel.ProgressIterable.Progress;
 
 public class ScaleThread extends Thread {
 

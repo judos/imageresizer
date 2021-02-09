@@ -1,4 +1,4 @@
-package controller;
+package ch.judos.imageresizer.controller;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import view.IFrame;
+import ch.judos.imageresizer.view.IFrame;
 
 public class SizeActionListener implements ActionListener {
 

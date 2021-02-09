@@ -1,4 +1,4 @@
-package model;
+package ch.judos.imageresizermodel;
 
 public enum SaveAction {
 	OVERWRITE, APPEND_SIZE, CHOOSE_FOLDER, CHOOSE_ALL;

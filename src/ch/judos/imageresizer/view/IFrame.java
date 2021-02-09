@@ -1,4 +1,4 @@
-package view;
+package ch.judos.imageresizer.view;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -22,12 +22,12 @@ import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-import model.AspectRatio;
-import model.IFrameModel;
-import model.SaveAction;
-import controller.AspectRatioActionListener;
-import controller.SizeActionListener;
-import controller.TargetActionListener;
+import ch.judos.imageresizer.controller.AspectRatioActionListener;
+import ch.judos.imageresizer.controller.SizeActionListener;
+import ch.judos.imageresizer.controller.TargetActionListener;
+import ch.judos.imageresizermodel.AspectRatio;
+import ch.judos.imageresizermodel.IFrameModel;
+import ch.judos.imageresizermodel.SaveAction;
 
 public class IFrame extends JFrame implements IFrameModel {
 	private static final long serialVersionUID = 3819774890772267562L;
@@ -50,7 +50,7 @@ public class IFrame extends JFrame implements IFrameModel {
 	private AspectRatio imgAspectRatio;
 
 	public IFrame(boolean visible) {
-		setTitle("ImageResizer, by judos 2013©");
+		setTitle("ImageResizer, by judos 2021Â©");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		this.imgSize = new Dimension(0, 0);
@@ -85,13 +85,9 @@ public class IFrame extends JFrame implements IFrameModel {
 		ButtonGroup g = new ButtonGroup();
 		this.listener = new AspectRatioActionListener(this);
 		JRadioButton b;
-		b =
-			addButton(g, new JRadioButton("fit into (selected size is maximal size)"), 0,
-				0);
+		b = addButton(g, new JRadioButton("fit into (selected size is maximal size)"), 0, 0);
 		b.setActionCommand("fit_into");
-		b =
-			addButton(g, new JRadioButton("fit onto (selected size is minimum size)"), 0,
-				1);
+		b = addButton(g, new JRadioButton("fit onto (selected size is minimum size)"), 0, 1);
 		b.setActionCommand("fit_onto");
 		b = addButton(g, new JRadioButton("force size (image might be distorted)"), 0, 2);
 		b.setActionCommand("force");
@@ -108,15 +104,12 @@ public class IFrame extends JFrame implements IFrameModel {
 
 		b = addButton(g, new JRadioButton("Overwrite file"), 0, 1);
 		b.setActionCommand("overwrite");
-		b =
-			addButton(g, new JRadioButton("Same folder, append \"width x height\""), 0, 2);
+		b = addButton(g, new JRadioButton("Same folder, append \"width x height\""), 0, 2);
 		b.setActionCommand("append_size");
 
 		b = addButton(g, new JRadioButton("Choose folder for all picture"), 0, 3);
 		b.setActionCommand("choose_folder");
-		b =
-			addButton(g, new JRadioButton("Choose path & filename for every picture"), 0,
-				4);
+		b = addButton(g, new JRadioButton("Choose path & filename for every picture"), 0, 4);
 		b.setActionCommand("choose_all");
 	}
 
@@ -158,8 +151,7 @@ public class IFrame extends JFrame implements IFrameModel {
 		addP(custom, 0, 4, 2, 1);
 	}
 
-	private JRadioButton addButton(ButtonGroup g, JPanel container,
-		JRadioButton jRadioButton, int x, int y) {
+	private JRadioButton addButton(ButtonGroup g, JPanel container, JRadioButton jRadioButton, int x, int y) {
 		addP(container, jRadioButton, x, y);
 		g.add(jRadioButton);
 		if (this.listener != null)
@@ -167,8 +159,7 @@ public class IFrame extends JFrame implements IFrameModel {
 		return jRadioButton;
 	}
 
-	private JRadioButton
-		addButton(ButtonGroup g, JRadioButton jRadioButton, int x, int y) {
+	private JRadioButton addButton(ButtonGroup g, JRadioButton jRadioButton, int x, int y) {
 		addButton(g, this.content, jRadioButton, x, y);
 		return jRadioButton;
 	}
@@ -195,8 +186,7 @@ public class IFrame extends JFrame implements IFrameModel {
 		return new Dimension(w * characters, h);
 	}
 
-	private Component addP(JPanel container, Component comp, int x, int y, int width,
-		int height) {
+	private Component addP(JPanel container, Component comp, int x, int y, int width, int height) {
 		comp.setFont(getFont());
 		c.gridx = x;
 		c.gridy = y;
