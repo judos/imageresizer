@@ -14,7 +14,6 @@ public class TargetActionListener implements ActionListener {
 		this.frame = iFrame;
 	}
 
-	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		String cmd = arg0.getActionCommand();
 		this.frame.setTargetAction(SaveAction.fromString(cmd));

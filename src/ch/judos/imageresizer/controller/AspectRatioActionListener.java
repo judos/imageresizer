@@ -14,7 +14,6 @@ public class AspectRatioActionListener implements ActionListener {
 		this.frame = iFrame;
 	}
 
-	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		String cmd = arg0.getActionCommand();
 		AspectRatio r = AspectRatio.fromString(cmd);

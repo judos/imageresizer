@@ -31,23 +31,21 @@ import javax.swing.border.Border;
  * 
  * MySwing: Advanced Swing Utilites 3 * Copyright (C) 2005 Santhosh Kumar T
  * 
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
+ * This library is free software; you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation; either version
+ * 2.1 of the License, or (at your option) any later version.
  * 
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
  * 
  * @since ??.??.2010
  * @author Santhosh Kumar T, Julian Schelker
  * @version 1.01 / 27.02.2013
  */
 
-public class ComponentTitledBorder implements Border, MouseListener, MouseMotionListener,
-	SwingConstants {
+public class ComponentTitledBorder
+	implements Border, MouseListener, MouseMotionListener, SwingConstants {
 
 	/**
 	 * an example to show you what this class does
@@ -63,8 +61,7 @@ public class ComponentTitledBorder implements Border, MouseListener, MouseMotion
 		final JCheckBox checkBox = new JCheckBox("Use Proxy", true);
 		checkBox.setFocusPainted(false);
 		ComponentTitledBorder componentBorder =
-			new ComponentTitledBorder(checkBox, proxyPanel,
-				BorderFactory.createEtchedBorder());
+			new ComponentTitledBorder(checkBox, proxyPanel, BorderFactory.createEtchedBorder());
 		checkBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				boolean enable = checkBox.isSelected();
@@ -132,7 +129,6 @@ public class ComponentTitledBorder implements Border, MouseListener, MouseMotion
 	 * 
 	 * @see javax.swing.border.Border#isBorderOpaque()
 	 */
-	@Override
 	public boolean isBorderOpaque() {
 		return true;
 	}
@@ -140,10 +136,9 @@ public class ComponentTitledBorder implements Border, MouseListener, MouseMotion
 	/**
 	 * (non-Javadoc)
 	 * 
-	 * @see javax.swing.border.Border#paintBorder(java.awt.Component,
-	 *      java.awt.Graphics, int, int, int, int)
+	 * @see javax.swing.border.Border#paintBorder(java.awt.Component, java.awt.Graphics, int, int,
+	 *      int, int)
 	 */
-	@Override
 	public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
 		Insets borderInsets = border.getBorderInsets(c);
 		Insets insets = getBorderInsets(c);
@@ -151,14 +146,14 @@ public class ComponentTitledBorder implements Border, MouseListener, MouseMotion
 		border.paintBorder(c, g, x, y + temp, width, height - temp);
 		Dimension size = comp.getPreferredSize();
 		switch (this.componentAlignement) {
-		case LEFT:
-			left = offset;
-			break;
-		case CENTER:
-			left = width / 2 - size.width / 2;
-			break;
-		case RIGHT:
-			left = width - size.width - offset;
+			case LEFT:
+				left = offset;
+				break;
+			case CENTER:
+				left = width / 2 - size.width / 2;
+				break;
+			case RIGHT:
+				left = width - size.width - offset;
 		}
 		rect = new Rectangle(left, 0, size.width, size.height);
 
@@ -170,7 +165,6 @@ public class ComponentTitledBorder implements Border, MouseListener, MouseMotion
 	 * 
 	 * @see javax.swing.border.Border#getBorderInsets(java.awt.Component)
 	 */
-	@Override
 	public Insets getBorderInsets(Component c) {
 		Dimension size = comp.getPreferredSize();
 		Insets insets = border.getBorderInsets(c);
@@ -181,7 +175,8 @@ public class ComponentTitledBorder implements Border, MouseListener, MouseMotion
 	private void dispatchEvent(MouseEvent me) {
 		if (rect != null && rect.contains(me.getX(), me.getY())) {
 			dispatchEvent(me, me.getID());
-		} else
+		}
+		else
 			dispatchEvent(me, MouseEvent.MOUSE_EXITED);
 	}
 
@@ -190,8 +185,8 @@ public class ComponentTitledBorder implements Border, MouseListener, MouseMotion
 		pt.translate(-rect.x, 0);
 
 		comp.setSize(rect.width, rect.height);
-		comp.dispatchEvent(new MouseEvent(comp, id, me.getWhen(), me.getModifiers(),
-			pt.x, pt.y, me.getClickCount(), me.isPopupTrigger(), me.getButton()));
+		comp.dispatchEvent(new MouseEvent(comp, id, me.getWhen(), me.getModifiersEx(), pt.x,
+			pt.y, me.getClickCount(), me.isPopupTrigger(), me.getButton()));
 		if (!comp.isValid()) {
 			container.repaint();
 		}
@@ -202,7 +197,6 @@ public class ComponentTitledBorder implements Border, MouseListener, MouseMotion
 	 * 
 	 * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
 	 */
-	@Override
 	public void mouseClicked(MouseEvent me) {
 		dispatchEvent(me);
 	}
@@ -212,7 +206,6 @@ public class ComponentTitledBorder implements Border, MouseListener, MouseMotion
 	 * 
 	 * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
 	 */
-	@Override
 	public void mouseExited(MouseEvent me) {
 		if (mouseEntered) {
 			mouseEntered = false;
@@ -225,7 +218,6 @@ public class ComponentTitledBorder implements Border, MouseListener, MouseMotion
 	 * 
 	 * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
 	 */
-	@Override
 	public void mousePressed(MouseEvent me) {
 		dispatchEvent(me);
 	}
@@ -235,7 +227,6 @@ public class ComponentTitledBorder implements Border, MouseListener, MouseMotion
 	 * 
 	 * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
 	 */
-	@Override
 	public void mouseReleased(MouseEvent me) {
 		dispatchEvent(me);
 	}
@@ -245,7 +236,6 @@ public class ComponentTitledBorder implements Border, MouseListener, MouseMotion
 	 * 
 	 * @see java.awt.event.MouseMotionListener#mouseDragged(java.awt.event.MouseEvent)
 	 */
-	@Override
 	public void mouseDragged(MouseEvent e) {}
 
 	/**
@@ -253,7 +243,6 @@ public class ComponentTitledBorder implements Border, MouseListener, MouseMotion
 	 * 
 	 * @see java.awt.event.MouseMotionListener#mouseMoved(java.awt.event.MouseEvent)
 	 */
-	@Override
 	public void mouseMoved(MouseEvent me) {
 		if (rect == null) {
 			return;
@@ -262,11 +251,13 @@ public class ComponentTitledBorder implements Border, MouseListener, MouseMotion
 		if (mouseEntered == false && rect.contains(me.getX(), me.getY())) {
 			mouseEntered = true;
 			dispatchEvent(me, MouseEvent.MOUSE_ENTERED);
-		} else if (mouseEntered == true) {
+		}
+		else if (mouseEntered == true) {
 			if (rect.contains(me.getX(), me.getY()) == false) {
 				mouseEntered = false;
 				dispatchEvent(me, MouseEvent.MOUSE_EXITED);
-			} else {
+			}
+			else {
 				dispatchEvent(me, MouseEvent.MOUSE_MOVED);
 			}
 		}
@@ -277,7 +268,6 @@ public class ComponentTitledBorder implements Border, MouseListener, MouseMotion
 	 * 
 	 * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
 	 */
-	@Override
 	public void mouseEntered(MouseEvent e) {}
 
 }

@@ -18,23 +18,19 @@ public class ProgressIterable<T> implements Iterable<Progress<T>> {
 		this((T[]) list.toArray());
 	}
 
-	@Override
 	public Iterator<Progress<T>> iterator() {
 		return new Iterator<Progress<T>>() {
 			int index = 0;
 
-			@Override
 			public boolean hasNext() {
 				return index < arr.length;
 			}
 
-			@Override
 			public Progress<T> next() {
 				float progress = (float) index / arr.length;
 				return new Progress<T>(progress, arr[index++]);
 			}
 
-			@Override
 			public void remove() {}
 
 		};

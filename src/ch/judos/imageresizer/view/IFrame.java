@@ -250,12 +250,10 @@ public class IFrame extends JFrame implements IFrameModel {
 		this.targetPanel.repaint();
 	}
 
-	@Override
 	public SaveAction getSaveAction() {
 		return this.saveAction;
 	}
 
-	@Override
 	public Dimension getTargetDimension() {
 		return this.imgSize;
 	}
@@ -266,12 +264,10 @@ public class IFrame extends JFrame implements IFrameModel {
 		this.aspectPanel.repaint();
 	}
 
-	@Override
 	public AspectRatio getAspectRatio() {
 		return this.imgAspectRatio;
 	}
 
-	@Override
 	public void setProgress(float progress) {
 		this.progressBorder.setColor(Color.orange);
 		this.progressPanel.removeAll();
@@ -288,7 +284,6 @@ public class IFrame extends JFrame implements IFrameModel {
 		pack();
 	}
 
-	@Override
 	public boolean allInputValid() {
 		if (!this.imgSizeValid)
 			return false;
@@ -299,7 +294,6 @@ public class IFrame extends JFrame implements IFrameModel {
 		return true;
 	}
 
-	@Override
 	public void setProgressFinished() {
 		this.progressBorder.setColor(Color.green);
 		this.progressPanel.removeAll();

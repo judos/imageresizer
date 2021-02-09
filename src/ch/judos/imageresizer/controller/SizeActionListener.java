@@ -16,22 +16,22 @@ public class SizeActionListener implements ActionListener {
 		this.frame = iFrame;
 	}
 
-	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		String button = arg0.getActionCommand();
 		Pattern p = Pattern.compile("(\\d+) x (\\d+)");
 		Matcher m = p.matcher(button);
 		if (m.matches()) {
-			this.frame.set(new Dimension(Integer.valueOf(m.group(1)), Integer
-				.valueOf(m.group(2))));
-		} else if (button.equals("Custom:")) {
+			this.frame
+				.set(new Dimension(Integer.valueOf(m.group(1)), Integer.valueOf(m.group(2))));
+		}
+		else if (button.equals("Custom:")) {
 			try {
-				this.frame.set(new Dimension(this.frame.getCustomSizeX(),
-					this.frame.getCustomSizeY()));
-				if (this.frame.getCustomSizeX() == 0
-					|| this.frame.getCustomSizeY() == 0)
+				this.frame
+					.set(new Dimension(this.frame.getCustomSizeX(), this.frame.getCustomSizeY()));
+				if (this.frame.getCustomSizeX() == 0 || this.frame.getCustomSizeY() == 0)
 					this.frame.sizeUnset();
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				this.frame.sizeUnset();
 			}
 
