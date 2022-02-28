@@ -25,6 +25,12 @@
 			<version>4.13.1</version>
 			<scope>test</scope>
 		</dependency>
+
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.github.geko444</groupId> -->
+<!-- 			<artifactId>im4java</artifactId> -->
+<!-- 			<version>1.4.2</version> -->
+<!-- 		</dependency> -->
 	</dependencies>
 
 	<build>
@@ -44,7 +50,8 @@
 						</goals>
 						<configuration>
 							<tasks>
-								<copy file="target/${project.artifactId}-${project.version}.jar"
+								<copy
+									file="target/${project.artifactId}-${project.version}.jar"
 									todir="${basedir}/" />
 							</tasks>
 						</configuration>
